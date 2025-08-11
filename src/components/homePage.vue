@@ -3,9 +3,9 @@
     <div class="overlay"></div>
     <div class="conteudo-central">
       <img :src="titulo" alt="Título" class="titulo-img" />
-      <button type="button" class="btn btn-dark btn-journey">
-        Iniciar Jornada
-      </button>
+      <router-link to="/mainPage" class="btn btn-dark btn-journey">
+        Iniciar jornada
+      </router-link>
     </div>
   </div>
 </template>
