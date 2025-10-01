@@ -8,6 +8,15 @@
       <div class="limgrave-desc">
         <p style="white-space: pre-line">{{ dados.Descricao }}</p>
       </div>
+
+      <div>
+        <h1 class="limgrave-title">{{ dados_caelid.Local }}</h1>
+        <h2 class="limgrave-subtitle">{{ dados_caelid.SubTitulo }}</h2>
+        <img :src="caelid_Img" alt="Imagem de caelid" class="limgrave_img" />
+        <div class="limgrave-desc">
+          <p style="white-space: pre-line">{{ dados_caelid.Descricao }}</p>
+        </div>
+      </div>
     </div>
     <div v-else>
       <h2>Carregando informações...</h2>
@@ -16,15 +25,17 @@
 </template>
 
 <script setup>
-import axios from "axios";
+//import api from "../services/api.js";
+import { RotaLimgrave, RotaCaelid } from "../services/api.js";
 import { ref, onMounted } from "vue";
 
 const dados = ref({});
+const dados_caelid = ref({});
 
 onMounted(async () => {
   try {
-    const resposta = await axios.get("http://localhost:8000/limgrave");
-    dados.value = resposta.data;
+    dados.value = await RotaLimgrave();
+    dados_caelid.value = await RotaCaelid();
   } catch (erro) {
     console.error("Erro ao buscar dados:", erro);
   }
@@ -34,6 +45,8 @@ import fundoImg from "@/assets/fundo_2.webp";
 const fundo = fundoImg;
 import limgrave_Img from "@/assets/limgrave_img.webp";
 const limgrave_img = limgrave_Img;
+import caelid_img from "@/assets/caelid_img.webp";
+const caelid_Img = caelid_img;
 </script>
 
 <style scoped>
