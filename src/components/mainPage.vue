@@ -1,18 +1,73 @@
 <template>
   <Navbar />
-  <div class="hero" :style="{ backgroundImage: `url(${fundo})` }">
+  <div
+    class="hero"
+    :style="{ backgroundImage: `url(${require('@/assets/fundo_2.webp')})` }"
+  >
     <div class="limgrave-container" v-if="dados.Local">
       <h1 class="limgrave-title">{{ dados.Local }}</h1>
       <h2 class="limgrave-subtitle">{{ dados.SubTitulo }}</h2>
-      <img :src="limgrave_img" alt="Imagem de limgrave" class="limgrave_img" />
+      <img
+        :src="require('@/assets/limgrave_img.webp')"
+        alt="Imagem de limgrave"
+        class="limgrave_img"
+      />
       <div class="limgrave-desc">
         <p style="white-space: pre-line">{{ dados.Descricao }}</p>
       </div>
 
+      <!-- Bosses Section de Limgrave-->
+      <div class="bosses-container">
+        <!-- Boss Margit -->
+        <div class="boss-card">
+          <h1 class="boss-title">{{ dados_margit.name }}</h1>
+          <h2 class="boss-location">{{ dados_margit.location }}</h2>
+          <img
+            :src="require('@/assets/margit_foto.jpg')"
+            alt="Imagem do boss Margit"
+            class="boss-img"
+          />
+          <div class="boss-desc">
+            <p>{{ dados_margit.description }}</p>
+          </div>
+          <div class="boss-stats">
+            <p><strong>Saúde:</strong> {{ dados_margit.Saúde }}</p>
+            <p><strong>Defesa:</strong> {{ dados_margit.Defesa }}</p>
+            <p><strong>Postura:</strong> {{ dados_margit.Postura }}</p>
+            <p><strong>Resistência:</strong> {{ dados_margit.Resistencia }}</p>
+            <p><strong>Fraqueza:</strong> {{ dados_margit.Fraqueza }}</p>
+            <p><strong>Recompensa:</strong> {{ dados_margit.Recompensa }}</p>
+          </div>
+        </div>
+        <div class="boss-card">
+          <h1 class="boss-title">{{ dados_godrick.name }}</h1>
+          <h2 class="boss-location">{{ dados_godrick.location }}</h2>
+          <img
+            :src="require('@/assets/godrick_foto.jpg')"
+            alt="Imagem do boss Godrick"
+            class="boss-img"
+          />
+          <div class="boss-desc">
+            <p>{{ dados_godrick.description }}</p>
+          </div>
+          <div class="boss-stats">
+            <p><strong>Saúde:</strong> {{ dados_godrick.Saúde }}</p>
+            <p><strong>Defesa:</strong> {{ dados_godrick.Defesa }}</p>
+            <p><strong>Postura:</strong> {{ dados_godrick.Postura }}</p>
+            <p><strong>Resistência:</strong> {{ dados_godrick.Resistencia }}</p>
+            <p><strong>Fraqueza:</strong> {{ dados_godrick.Fraqueza }}</p>
+            <p><strong>Recompensa:</strong> {{ dados_godrick.Recompensa }}</p>
+          </div>
+        </div>
+      </div>
       <div>
         <h1 class="limgrave-title">{{ dados_caelid.Local }}</h1>
         <h2 class="limgrave-subtitle">{{ dados_caelid.SubTitulo }}</h2>
-        <img :src="caelid_Img" alt="Imagem de caelid" class="limgrave_img" />
+        <img
+          :src="require('@/assets/caelid_img.webp')"
+          alt="Imagem de caelid"
+          class="limgrave_img"
+        />
         <div class="limgrave-desc">
           <p style="white-space: pre-line">{{ dados_caelid.Descricao }}</p>
         </div>
@@ -25,28 +80,31 @@
 </template>
 
 <script setup>
-//import api from "../services/api.js";
-import { RotaLimgrave, RotaCaelid } from "../services/api.js";
+import {
+  RotaLimgrave,
+  RotaCaelid,
+  Rota_margit,
+  Rota_godrick,
+} from "../services/api.js";
 import { ref, onMounted } from "vue";
 
 const dados = ref({});
 const dados_caelid = ref({});
+const dados_margit = ref({});
+const dados_godrick = ref({});
 
 onMounted(async () => {
   try {
     dados.value = await RotaLimgrave();
     dados_caelid.value = await RotaCaelid();
+    dados_margit.value = await Rota_margit();
+    dados_godrick.value = await Rota_godrick();
   } catch (erro) {
     console.error("Erro ao buscar dados:", erro);
   }
 });
+
 import Navbar from "@/components/navBar.vue";
-import fundoImg from "@/assets/fundo_2.webp";
-const fundo = fundoImg;
-import limgrave_Img from "@/assets/limgrave_img.webp";
-const limgrave_img = limgrave_Img;
-import caelid_img from "@/assets/caelid_img.webp";
-const caelid_Img = caelid_img;
 </script>
 
 <style scoped>
@@ -72,6 +130,24 @@ const caelid_Img = caelid_img;
   padding: 2.5rem 2.5rem 2rem 2.5rem;
   max-width: 1500px;
   margin: 3rem auto;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  color: #ffd700;
+  text-align: left;
+}
+
+.bosses-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os cards fiquem lado a lado e sejam responsivos */
+  gap: 2rem; /* Espaço entre os cards */
+  justify-content: center; /* Centraliza os cards */
+  margin-top: 2rem;
+}
+
+.boss-card {
+  background: rgba(34, 34, 34, 0.85); /* fundo escuro translúcido */
+  border-radius: 18px;
+  padding: 2rem;
+  width: 300px; /* Largura fixa para os cards */
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
   color: #ffd700;
   text-align: left;
@@ -117,5 +193,46 @@ const caelid_Img = caelid_img;
   object-fit: cover; /* Garante que a imagem não distorça */
   margin-left: auto;
   margin-right: auto;
+}
+
+.boss-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 2px 2px 8px #000, 0 0 16px #222;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.boss-location {
+  font-size: 1.2rem;
+  color: #fffbe6;
+  text-shadow: 1px 1px 6px #000;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.boss-img {
+  max-width: 100%;
+  max-height: 200px; /* Limita a altura máxima */
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  display: block;
+  margin: 1rem auto;
+}
+
+.boss-desc {
+  font-size: 1rem;
+  color: #f3e7b3;
+  text-shadow: 1px 1px 4px #000;
+  line-height: 1.5;
+  margin-top: 1rem;
+}
+
+.boss-stats {
+  margin-top: 1rem;
+  font-size: 1rem;
 }
 </style>
