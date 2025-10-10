@@ -30,6 +30,8 @@ O principal propósito do Elden Wiki é criar um ambiente colaborativo e informa
 - Sistema de **comentários** e **cadastro de usuários**.  
 - Integração com **MySQL** para modelagem de banco relacional.  
 - Autenticação com **verificação em dois fatores via e-mail**.  
+- **Deploy em nuvem** para disponibilizar o projeto publicamente 
+
 
 ---
 
