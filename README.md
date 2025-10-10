@@ -1,10 +1,10 @@
-# 🛡️ Elden Wiki
+# Elden Wiki
 
 A personal, full-stack development project aimed at honing my programming skills and serving as a key piece of my professional portfolio.
 
 Elden Wiki seeks to be a community-driven repository for information, trivia, and fan theories about the Elden Ring universe. It also provides a space for the community to share ideas, ask questions, and discuss their latest discoveries.
 
-## 🎯 Project Goals
+## Project Goals
 
 The main purpose of the Elden Wiki is to create an informative and collaborative environment around the Elden Ring lore, allowing:
 
@@ -12,11 +12,11 @@ The main purpose of the Elden Wiki is to create an informative and collaborative
 - The community to submit questions and comments.
 - Me to demonstrate and practice full-stack development skills, from database modeling to front-end responsiveness.
 
-## 🧩 Technologies Used
+## Technologies Used
 
 This project uses a modern, decoupled architecture, separating the client (Frontend) and the data service (Backend).
 
-### 🖥️ Frontend
+### Frontend
 
 | Technology | Role |
 |------------|------|
@@ -24,7 +24,7 @@ This project uses a modern, decoupled architecture, separating the client (Front
 | Axios      | API consumption and request management. |
 | Node.js    | Runtime environment for execution and dependency management. |
 
-### ⚙️ Backend
+### Backend
 
 | Technology | Role |
 |------------|------|
@@ -32,14 +32,14 @@ This project uses a modern, decoupled architecture, separating the client (Front
 | FastAPI    | High-performance, modern framework for building a REST API. |
 | Uvicorn    | ASGI server used to run the backend application. |
 
-## 🗄️ Future Implementations (Roadmap)
+## Future Implementations (Roadmap)
 
 - System for comments and user registration.
 - Integration with MySQL for relational database modeling.
 - Secure authentication with Two-Factor Verification via email.
 - Cloud deployment (e.g., AWS, Azure, or Google Cloud) to make the project publicly accessible.
 
-## 🚀 How to Run the Project (Frontend)
+## How to Run the Project (Frontend)
 
 This guide is for setting up the frontend. Please ensure you have the backend server running separately to fetch data via the API.
 
