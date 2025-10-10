@@ -4,18 +4,9 @@ const api = axios.create({
   baseURL: "http://127.0.0.1:8000",
 });
 
-export async function Rota_margit() {
+export async function Limgrave_bosses() {
   try {
-    const resposta = await api.get("/bosses/1");
-    return resposta.data;
-  } catch (erro) {
-    console.error("Erro ao buscar dados:", erro);
-  }
-}
-
-export async function Rota_godrick() {
-  try {
-    const resposta = await api.get("/bosses/2");
+    const resposta = await api.get("/bosses/limgrave_boss");
     return resposta.data;
   } catch (erro) {
     console.error("Erro ao buscar dados:", erro);
