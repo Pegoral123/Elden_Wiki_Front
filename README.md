@@ -52,5 +52,7 @@ O principal propósito do Elden Wiki é criar um ambiente colaborativo e informa
    ```bash
     npm install
    
-6. **Instale as dependências::**  
+5. **Inicie o servidor de desenvolvimento:**
+    ```bash
+    npm run dev 
    
