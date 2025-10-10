@@ -45,10 +45,12 @@ O principal propósito do Elden Wiki é criar um ambiente colaborativo e informa
    git clone https://github.com/Pegoral123/Elden_Wiki_Front.git
 
 2. **Entre no diretório do projeto:**
+   ```bash
     cd Elden_Wiki_Front
 
-3. **Instale as dependências::**
+4. **Instale as dependências::**
+   ```bash
     npm install
    
-4. **Instale as dependências::**  
+6. **Instale as dependências::**  
    
