@@ -50,9 +50,8 @@ Make sure you have Node.js and npm installed on your machine.
 ### Steps
 
 1. Clone this repository:
-
-```bash
-git clone https://github.com/Pegoral123/Elden_Wiki_Front.git
+   ```bash
+    git clone https://github.com/Pegoral123/Elden_Wiki_Front.git
 
 2. **Navigate to the project directory:**
    ```bash
