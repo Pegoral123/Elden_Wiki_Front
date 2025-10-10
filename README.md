@@ -1,4 +1,4 @@
-# Elden Wiki
+# Elden Wiki - Front-End
 
 A personal, full-stack development project aimed at honing my programming skills and serving as a key piece of my professional portfolio.
 
