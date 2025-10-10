@@ -1,58 +1,68 @@
-# 🛡️ **Elden Wiki**
+# 🛡️ Elden Wiki
 
-Um projeto pessoal desenvolvido com o objetivo de **aprimorar minhas habilidades de programação** e **servir como parte do meu portfólio**.  
-O **Elden Wiki** busca reunir **informações, curiosidades e teorias** sobre o universo do jogo *Elden Ring*, oferecendo também um espaço para que a comunidade compartilhe suas próprias ideias, dúvidas e descobertas.
+A personal, full-stack development project aimed at honing my programming skills and serving as a key piece of my professional portfolio.
 
----
+Elden Wiki seeks to be a community-driven repository for information, trivia, and fan theories about the Elden Ring universe. It also provides a space for the community to share ideas, ask questions, and discuss their latest discoveries.
 
-## 🎯 **Objetivo do Projeto**
+## 🎯 Project Goals
 
-O principal propósito do Elden Wiki é criar um ambiente colaborativo e informativo sobre o universo de *Elden Ring*, permitindo que:
-- Os usuários explorem curiosidades e dados sobre o jogo.
-- A comunidade envie perguntas e comentários.
-- Eu possa demonstrar e praticar habilidades em **desenvolvimento full-stack**.
+The main purpose of the Elden Wiki is to create an informative and collaborative environment around the Elden Ring lore, allowing:
 
----
+- Users to explore curiosities and data about the game.
+- The community to submit questions and comments.
+- Me to demonstrate and practice full-stack development skills, from database modeling to front-end responsiveness.
 
-## 🧩 **Tecnologias Utilizadas**
+## 🧩 Technologies Used
 
-### 🖥️ **Frontend**
-- [Vue.js](https://vuejs.org/) — Framework principal do front-end.  
-- [Axios](https://axios-http.com/) — Consumo da API e gerenciamento de rotas.  
-- [Node.js](https://nodejs.org/) — Ambiente para execução e gerenciamento de dependências.
+This project uses a modern, decoupled architecture, separating the client (Frontend) and the data service (Backend).
 
-### ⚙️ **Backend**
-- [Python](https://www.python.org/)
-- [FastAPI](https://fastapi.tiangolo.com/) — Framework para criação da API REST.
-- [Uvicorn](https://www.uvicorn.org/) — Servidor ASGI utilizado para rodar a aplicação backend.
+### 🖥️ Frontend
 
-### 🗄️ **Futuras Implementações**
-- Sistema de **comentários** e **cadastro de usuários**.  
-- Integração com **MySQL** para modelagem de banco relacional.  
-- Autenticação com **verificação em dois fatores via e-mail**.  
-- **Deploy em nuvem** para disponibilizar o projeto publicamente 
+| Technology | Role |
+|------------|------|
+| Vue.js     | Primary framework for the user interface and component-based structure. |
+| Axios      | API consumption and request management. |
+| Node.js    | Runtime environment for execution and dependency management. |
 
+### ⚙️ Backend
 
----
+| Technology | Role |
+|------------|------|
+| Python     | The core programming language. |
+| FastAPI    | High-performance, modern framework for building a REST API. |
+| Uvicorn    | ASGI server used to run the backend application. |
 
-## 🚀 **Como Rodar o Projeto (Frontend)**
+## 🗄️ Future Implementations (Roadmap)
 
-> ⚠️ Pré-requisitos:  
-> Certifique-se de ter o [Node.js](https://nodejs.org/en/) e o [npm](https://www.npmjs.com/) instalados na sua máquina.
+- System for comments and user registration.
+- Integration with MySQL for relational database modeling.
+- Secure authentication with Two-Factor Verification via email.
+- Cloud deployment (e.g., AWS, Azure, or Google Cloud) to make the project publicly accessible.
 
-1. **Clone este repositório:**
-   ```bash
-   git clone https://github.com/Pegoral123/Elden_Wiki_Front.git
+## 🚀 How to Run the Project (Frontend)
 
-2. **Entre no diretório do projeto:**
+This guide is for setting up the frontend. Please ensure you have the backend server running separately to fetch data via the API.
+
+### ⚠️ Prerequisites
+
+Make sure you have Node.js and npm installed on your machine.
+
+### Steps
+
+1. Clone this repository:
+
+```bash
+git clone https://github.com/Pegoral123/Elden_Wiki_Front.git
+
+2. **Navigate to the project directory:**
    ```bash
     cd Elden_Wiki_Front
 
-4. **Instale as dependências::**
+4. **Install the dependencies:**
    ```bash
     npm install
    
-5. **Inicie o servidor de desenvolvimento:**
+5. **Start the development server:**
     ```bash
     npm run serve
    
