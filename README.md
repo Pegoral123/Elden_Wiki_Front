@@ -54,5 +54,5 @@ O principal propósito do Elden Wiki é criar um ambiente colaborativo e informa
    
 5. **Inicie o servidor de desenvolvimento:**
     ```bash
-    npm run dev 
+    npm run serve
    
