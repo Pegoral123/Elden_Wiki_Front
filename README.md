@@ -43,7 +43,7 @@ This project uses a modern, decoupled architecture, separating the client (Front
 
 This guide is for setting up the frontend. Please ensure you have the backend server running separately to fetch data via the API.
 
-### ⚠️ Prerequisites
+### Prerequisites
 
 Make sure you have Node.js and npm installed on your machine.
 
