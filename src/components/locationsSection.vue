@@ -15,7 +15,7 @@
 
       <!-- Bosses Section -->
       <div class="bosses-container">
-        <div class="boss-card" v-for="boss in bosses" :key="boss.id">
+        <div class="boss-card" v-for="boss in bosses_limgrave" :key="boss.id">
           <h1 class="boss-title">{{ boss.name }}</h1>
           <h2 class="boss-location">{{ boss.location }}</h2>
           <img
@@ -50,26 +50,54 @@
       <div class="locais-desc">
         <p>{{ caelid_local.Descricao }}</p>
       </div>
+
+      <!-- Bosses Section -->
+      <div class="bosses-container">
+        <div class="boss-card" v-for="boss in bosses_caelid" :key="boss.id">
+          <h1 class="boss-title">{{ boss.name }}</h1>
+          <h2 class="boss-location">{{ boss.location }}</h2>
+          <img
+            :src="boss.image"
+            :alt="`Imagem do boss ${boss.name}`"
+            class="boss-img"
+          />
+          <div class="boss-desc">
+            <p>{{ boss.description }}</p>
+          </div>
+          <div class="boss-stats">
+            <p><strong>Saúde:</strong> {{ boss.Saúde }}</p>
+            <p><strong>Defesa:</strong> {{ boss.Defesa }}</p>
+            <p><strong>Postura:</strong> {{ boss.Postura }}</p>
+            <p><strong>Resistência:</strong> {{ boss.Resistencia }}</p>
+            <p><strong>Fraqueza:</strong> {{ boss.Fraqueza }}</p>
+            <p><strong>Recompensa:</strong> {{ boss.Recompensa }}</p>
+          </div>
+        </div>
+      </div>
     </section>
   </section>
 </template>
 
 <script setup>
-import { RotaLimgrave, RotaCaelid, Limgrave_bosses } from "../services/api.js";
+import {
+  RotaLimgrave,
+  RotaCaelid,
+  Limgrave_bosses,
+  caelid_bosses,
+} from "../services/api.js";
 import { ref, onMounted } from "vue";
 
 const limgrave_local = ref({});
 const caelid_local = ref({});
-const bosses = ref([]);
+const bosses_limgrave = ref([]);
+const bosses_caelid = ref([]);
 
 onMounted(async () => {
   try {
-    // Carrega os dados de Limgrave e Caelid
     limgrave_local.value = await RotaLimgrave();
     caelid_local.value = await RotaCaelid();
-
-    // Carrega os bosses da rota limgrave_bosses
-    bosses.value = await Limgrave_bosses();
+    bosses_limgrave.value = await Limgrave_bosses();
+    bosses_caelid.value = await caelid_bosses();
   } catch (erro) {
     console.error("Erro ao buscar dados:", erro);
   }
