@@ -6,7 +6,16 @@ const api = axios.create({
 
 export async function Limgrave_bosses() {
   try {
-    const resposta = await api.get("/bosses/limgrave_boss");
+    const resposta = await api.get("/boss/limgrave_bosses");
+    return resposta.data;
+  } catch (erro) {
+    console.error("Erro ao buscar dados:", erro);
+  }
+}
+
+export async function caelid_bosses() {
+  try {
+    const resposta = await api.get("/boss/caelid_bosses");
     return resposta.data;
   } catch (erro) {
     console.error("Erro ao buscar dados:", erro);
@@ -15,7 +24,7 @@ export async function Limgrave_bosses() {
 
 export async function RotaLimgrave() {
   try {
-    const resposta = await api.get("/locais/limgrave");
+    const resposta = await api.get("/locations/limgrave");
     return resposta.data;
   } catch (erro) {
     console.error("Erro ao buscar dados:", erro);
@@ -24,7 +33,7 @@ export async function RotaLimgrave() {
 
 export async function RotaCaelid() {
   try {
-    const resposta = await api.get("/locais/caelid");
+    const resposta = await api.get("/locations/caelid");
     return resposta.data;
   } catch (erro) {
     console.error("Erro ao buscar dados:", erro);
