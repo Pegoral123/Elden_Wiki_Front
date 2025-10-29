@@ -1,21 +1,21 @@
 <template>
   <section class="locais-container">
-    <!-- Loading / Error / Content state handling -->
-    <div v-if="loading" class="loading-state">
+    <div v-if="status === 'loading'" class="loading-state">
       <div class="spinner" aria-hidden="true"></div>
       <p>Carregando informações... Aguarde.</p>
     </div>
 
-    <div v-else-if="error" class="error-state">
-      <p>
-        <strong>Erro ao carregar dados:</strong>
-        {{ errorMessage || "Servidor indisponível." }}
-      </p>
-      <button @click="retry" class="retry-btn">Tentar novamente</button>
+    <div v-else-if="status === 'error'" class="modal-state">
+      <div class="modal-box">
+        <div class="error-state">
+          <p>⚠️ Erro ao carregar os dados!</p>
+          <p>{{ errorMessage }}</p>
+          <button @click="fetchData" class="retry-btn">Tentar Novamente</button>
+        </div>
+      </div>
     </div>
 
-    <div v-else>
-      <!-- Limgrave Section -->
+    <div v-else-if="status === 'success'">
       <section v-if="limgrave_local && limgrave_local.Local">
         <h1 class="locais-title">{{ limgrave_local.Local }}</h1>
         <h2 class="locais-subtitle">{{ limgrave_local.SubTitulo }}</h2>
@@ -28,7 +28,6 @@
           <p>{{ limgrave_local.Descricao }}</p>
         </div>
 
-        <!-- Bosses Section -->
         <div class="bosses-container" v-if="(bosses_limgrave || []).length">
           <div
             class="boss-card"
@@ -57,7 +56,6 @@
         </div>
       </section>
 
-      <!-- Caelid Section -->
       <section v-if="caelid_local && caelid_local.Local">
         <h1 class="locais-title">{{ caelid_local.Local }}</h1>
         <h2 class="locais-subtitle">{{ caelid_local.SubTitulo }}</h2>
@@ -70,7 +68,6 @@
           <p>{{ caelid_local.Descricao }}</p>
         </div>
 
-        <!-- Bosses Section -->
         <div class="bosses-container" v-if="(bosses_caelid || []).length">
           <div
             class="boss-card"
@@ -115,14 +112,11 @@ const limgrave_local = ref({});
 const caelid_local = ref({});
 const bosses_limgrave = ref([]);
 const bosses_caelid = ref([]);
-
-const loading = ref(true);
-const error = ref(false);
+const status = ref("loading");
 const errorMessage = ref("");
 
 async function fetchData() {
-  loading.value = true;
-  error.value = false;
+  status.value = "loading";
   errorMessage.value = "";
 
   try {
@@ -132,19 +126,18 @@ async function fetchData() {
       Limgrave_bosses(),
       caelid_bosses(),
     ]);
+
     limgrave_local.value = lim || {};
     caelid_local.value = cae || {};
     bosses_limgrave.value = bLim || [];
     bosses_caelid.value = bCae || [];
+    status.value = "success";
   } catch (err) {
+    status.value = "error";
+    errorMessage.value =
+      "Houve um problema de comunicação com o servidor. Por favor, tente novamente.";
     console.error("Erro ao buscar dados:", err);
-    error.value = true;
-    errorMessage.value = err && err.message ? err.message : String(err);
   }
-}
-
-function retry() {
-  fetchData();
 }
 
 onMounted(() => {
@@ -161,7 +154,8 @@ onMounted(() => {
   margin: 3rem auto;
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
   color: #ffd700;
-  text-align: center; /* Centraliza o texto */
+  text-align: center;
+  position: relative; /* CRUCIAL para o posicionamento do modal de erro */
 }
 
 .locais-title {
@@ -195,13 +189,13 @@ onMounted(() => {
 .locais_img {
   margin-top: 1.5rem;
   max-width: 100%;
-  max-height: 500px; /* Limita a altura máxima */
+  max-height: 500px;
   width: auto;
   height: auto;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   display: block;
-  object-fit: cover; /* Garante que a imagem não distorça */
+  object-fit: cover;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2rem;
@@ -209,18 +203,18 @@ onMounted(() => {
 
 .bosses-container {
   display: flex;
-  flex-wrap: wrap; /* Permite que os cards fiquem lado a lado e sejam responsivos */
-  gap: 2rem; /* Espaço entre os cards */
-  justify-content: center; /* Centraliza os cards */
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
 
 .boss-card {
-  background: rgba(34, 34, 34, 0.85); /* fundo escuro translúcido */
+  background: rgba(34, 34, 34, 0.85);
   border-radius: 18px;
   padding: 2rem;
-  width: 300px; /* Largura fixa para os cards */
+  width: 300px;
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
   color: #ffd700;
   text-align: left;
@@ -245,7 +239,7 @@ onMounted(() => {
 
 .boss-img {
   max-width: 100%;
-  max-height: 200px; /* Limita a altura máxima */
+  max-height: 200px;
   width: auto;
   height: auto;
   border-radius: 12px;
@@ -267,13 +261,14 @@ onMounted(() => {
   font-size: 1rem;
 }
 
-/* Loading / Error styles */
+/* Loading styles */
 .loading-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 4rem 1rem;
+  min-height: 300px;
 }
 
 .spinner {
@@ -292,9 +287,20 @@ onMounted(() => {
   }
 }
 
+.modal-box {
+  pointer-events: auto;
+  position: relative;
+  padding: 2.5rem;
+  border-radius: 18px;
+  width: 520px;
+  max-width: 90%;
+
+  color: #ffd700;
+  text-align: center;
+}
 .error-state {
   color: #ffdddd;
-  background: rgba(120, 20, 20, 0.4);
+  background: rgba(120, 20, 20, 0.6);
   padding: 1.5rem;
   border-radius: 12px;
   text-align: center;
@@ -308,9 +314,13 @@ onMounted(() => {
   padding: 0.6rem 1rem;
   border-radius: 8px;
   cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
 }
 
 .retry-btn:hover {
-  opacity: 0.9;
+  background: #ffc700;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 </style>

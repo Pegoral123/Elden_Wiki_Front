@@ -6,7 +6,7 @@
       </a>
     </div>
     <ul class="navbar-links">
-      <li><a href="/contact" class="link-cadastro">Cadastro</a></li>
+      <li><a href="/LoginPage" class="link-cadastro">Cadastro</a></li>
       <li>
         <a
           href="https://discord.gg/Qy5t2k6M"

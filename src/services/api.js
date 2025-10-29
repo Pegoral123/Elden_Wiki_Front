@@ -9,7 +9,8 @@ export async function Limgrave_bosses() {
     const resposta = await api.get("/boss/limgrave_bosses");
     return resposta.data;
   } catch (erro) {
-    console.error("Erro ao buscar dados:", erro);
+    console.error("Erro ao buscar bosses de Limgrave:", erro);
+    throw erro;
   }
 }
 
@@ -18,7 +19,8 @@ export async function caelid_bosses() {
     const resposta = await api.get("/boss/caelid_bosses");
     return resposta.data;
   } catch (erro) {
-    console.error("Erro ao buscar dados:", erro);
+    console.error("Erro ao buscar bosses de Caelid:", erro);
+    throw erro;
   }
 }
 
@@ -27,7 +29,8 @@ export async function RotaLimgrave() {
     const resposta = await api.get("/locations/limgrave");
     return resposta.data;
   } catch (erro) {
-    console.error("Erro ao buscar dados:", erro);
+    console.error("Erro ao buscar local Limgrave:", erro);
+    throw erro;
   }
 }
 
@@ -36,11 +39,7 @@ export async function RotaCaelid() {
     const resposta = await api.get("/locations/caelid");
     return resposta.data;
   } catch (erro) {
-    console.error("Erro ao buscar dados:", erro);
+    console.error("Erro ao buscar local Caelid:", erro);
+    throw erro;
   }
 }
-
-//getRegiao: async (nome) => {
-//const resposta = await api.get(`/${nome}`);
-// return resposta.data;
-//};
