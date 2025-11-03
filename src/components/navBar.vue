@@ -68,7 +68,7 @@ const logo = logoImg;
 }
 
 .navbar-links a {
-  color: #fff;
+  color: #636157;
   text-decoration: none;
   font-size: 1.25rem;
   font-weight: 500;
@@ -79,7 +79,7 @@ const logo = logoImg;
 }
 
 .navbar-links .link-cadastro {
-  color: #ffd700;
+  color: #8b876e;
   font-weight: bold;
   font-size: 1.3rem;
 }

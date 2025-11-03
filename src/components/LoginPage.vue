@@ -1,4 +1,5 @@
 <template>
+  <Navbar />
   <div class="login-page">
     <div class="card">
       <div class="card-top" aria-hidden="true"></div>
@@ -80,11 +81,18 @@
       </div>
     </div>
   </div>
+  <Footer />
 </template>
 
 <script>
+import Navbar from "@/components/navBar.vue";
+import Footer from "@/components/footerPage.vue";
 export default {
   name: "LoginPage",
+  components: {
+    Navbar,
+    Footer,
+  },
   data() {
     return {
       username: "",
