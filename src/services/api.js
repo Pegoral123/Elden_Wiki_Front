@@ -4,6 +4,15 @@ const api = axios.create({
   baseURL: "http://127.0.0.1:8000",
 });
 
+// permite configurar token de autorização padrão para chamadas subsequentes
+export function setAuthToken(token) {
+  if (token) {
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  } else {
+    delete api.defaults.headers.common["Authorization"];
+  }
+}
+
 export async function Limgrave_bosses() {
   try {
     const resposta = await api.get("/boss/limgrave_bosses");
@@ -40,6 +49,17 @@ export async function RotaCaelid() {
     return resposta.data;
   } catch (erro) {
     console.error("Erro ao buscar local Caelid:", erro);
+    throw erro;
+  }
+}
+// função para login (chama a rota /login do backend)
+export async function loginUser(email, password) {
+  try {
+    const resposta = await api.post("/auth/login", { email, password });
+    return resposta.data;
+  } catch (erro) {
+    // normaliza o erro para o frontend
+    if (erro.response && erro.response.data) throw erro.response.data;
     throw erro;
   }
 }

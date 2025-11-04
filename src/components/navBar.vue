@@ -6,7 +6,7 @@
       </a>
     </div>
     <ul class="navbar-links">
-      <li><a href="/LoginPage" class="link-cadastro">Cadastro</a></li>
+      <li><a href="/LoginPage" class="link-cadastro">Conectar-se</a></li>
       <li>
         <a
           href="https://discord.gg/Qy5t2k6M"
@@ -34,7 +34,7 @@ const logo = logoImg;
   background: #181818;
   padding: 0 3rem;
   color: #fff;
-  border-bottom: 3px solid rgba(255, 215, 0, 0.15);
+  border-bottom: 3px solid rgba(212, 175, 55, 0.15);
   height: 80px;
   box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.25);
   position: sticky;
@@ -79,7 +79,8 @@ const logo = logoImg;
 }
 
 .navbar-links .link-cadastro {
-  color: #8b876e;
+  color: #d4af37; /* título dourado */
+  text-shadow: 2px 2px 8px #000, 0 0 16px #222;
   font-weight: bold;
   font-size: 1.3rem;
 }
@@ -87,7 +88,7 @@ const logo = logoImg;
 .navbar-links a:hover,
 .navbar-links .link-cadastro:hover {
   color: #fffbe6;
-  background: rgba(255, 215, 0, 0.08);
+  background: rgba(212, 175, 55, 0.08);
   transform: translateY(-2px) scale(1.07);
 }
 

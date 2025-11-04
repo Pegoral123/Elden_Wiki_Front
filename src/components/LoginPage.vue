@@ -1,12 +1,16 @@
 <template>
   <Navbar />
-  <div class="login-page">
+  <div
+    class="hero"
+    :style="{ backgroundImage: `url(${require('@/assets/fundo_4.webp')})` }"
+  >
     <div class="card">
       <div class="card-top" aria-hidden="true"></div>
       <div class="card-body">
         <h2 class="title">Login</h2>
 
         <form @submit.prevent="login" class="form">
+          <div v-if="errorMessage" class="form-error">{{ errorMessage }}</div>
           <label class="input-wrap">
             <svg
               class="icon"
@@ -28,9 +32,9 @@
             </svg>
             <input
               type="text"
-              v-model="username"
-              placeholder="Username"
-              autocomplete="username"
+              v-model="email"
+              placeholder="Email"
+              autocomplete="email"
             />
           </label>
 
@@ -60,7 +64,7 @@
             <input
               type="password"
               v-model="password"
-              placeholder="Password"
+              placeholder="Senha"
               autocomplete="current-password"
             />
           </label>
@@ -69,14 +73,17 @@
             <label class="remember">
               <input type="checkbox" v-model="remember" />
               <span class="checkbox-custom"></span>
-              remember me
+              Lembrar me
             </label>
-            <a class="forgot" href="#">forgot password</a>
+            <a class="forgot" href="#">Esqueci minha senha</a>
           </div>
 
-          <button class="btn-login" type="submit">Login</button>
+          <button class="btn-login" type="submit" :disabled="loading">
+            <span v-if="!loading">Login</span>
+            <span v-else>Entrando...</span>
+          </button>
 
-          <div class="create">Create Account</div>
+          <div class="create">Criar Conta</div>
         </form>
       </div>
     </div>
@@ -87,6 +94,8 @@
 <script>
 import Navbar from "@/components/navBar.vue";
 import Footer from "@/components/footerPage.vue";
+import { loginUser, setAuthToken } from "@/services/api.js";
+
 export default {
   name: "LoginPage",
   components: {
@@ -95,20 +104,39 @@ export default {
   },
   data() {
     return {
-      username: "",
+      email: "",
       password: "",
       remember: false,
+      loading: false,
+      errorMessage: "",
     };
   },
   methods: {
-    login() {
-      // lógica de login mínima – substitua por chamada real à API
-      console.log("login", {
-        username: this.username,
-        password: this.password,
-        remember: this.remember,
-      });
-      // exemplo: this.$router.push('/') após autenticação
+    async login() {
+      this.errorMessage = "";
+      this.loading = true;
+      try {
+        const res = await loginUser(this.email, this.password);
+        // exemplo de dados retornados: { idToken, refreshToken, expiresIn, localId }
+        if (res.idToken) {
+          localStorage.setItem("idToken", res.idToken);
+        }
+        if (res.refreshToken) {
+          localStorage.setItem("refreshToken", res.refreshToken);
+        }
+        // configura header Authorization para futuras chamadas
+        setAuthToken(res.idToken);
+
+        // redireciona para mainPage (ou rota desejada)
+        this.$router.push({ path: "/mainPage" });
+      } catch (err) {
+        alert("Login falhou:", err);
+        // err pode ser um objeto vindo do backend
+        this.errorMessage =
+          (err && err.error && err.error.message) || err.message || String(err);
+      } finally {
+        this.loading = false;
+      }
     },
   },
 };
@@ -116,27 +144,39 @@ export default {
 
 <style scoped>
 /* Página inteira */
-.login-page {
+.hero {
+  position: relative;
+  width: 100%;
   min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* efeito parallax */
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, #6b3b6b 0%, #3b2150 100%);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial;
+  overflow: hidden;
+  text-align: center;
+  font-family: serif;
 }
 
 .card {
   width: 360px;
   border-radius: 10px;
-  box-shadow: 0 20px 40px rgba(11, 4, 25, 0.5);
+  box-shadow: 0 20px 40px rgba(11, 4, 25, 0.6);
   overflow: hidden;
-  background: #f6f3f6;
+  background: #181818; /* mesmo tom do navbar/footer */
+  border-top: 3px solid rgba(212, 175, 55, 0.08);
 }
 
 .card-top {
   height: 120px;
-  background: linear-gradient(135deg, #8b5fa6 0%, #e6a0b8 60%);
+  /* leve brilho dourado para combinar com o tema */
+  background: linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.08) 0%,
+    rgba(212, 175, 55, 0.03) 60%
+  );
   background-size: cover;
 }
 
@@ -146,8 +186,10 @@ export default {
 
 .title {
   margin: 0 0 14px 0;
-  font-size: 22px;
-  color: #1d1b1f;
+  font-size: 30px;
+  color: #d4af37; /* título dourado */
+  text-shadow: 2px 2px 8px #000, 0 0 16px #222;
+  font-weight: bold;
   font-weight: 700;
 }
 
@@ -159,10 +201,11 @@ export default {
 .input-wrap {
   display: flex;
   align-items: center;
-  background: #ffd1df;
+  background: rgba(212, 175, 55, 0.04); /* fundo escuro com leve tom dourado */
   border-radius: 20px;
   padding: 8px 12px;
   margin-bottom: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.06);
 }
 
 .input-wrap .icon {
@@ -178,7 +221,7 @@ export default {
   background: transparent;
   flex: 1;
   font-size: 14px;
-  color: #3b233a;
+  color: #fffbe6; /* texto claro sobre fundo escuro */
 }
 
 .options {
@@ -202,34 +245,38 @@ export default {
   width: 14px;
   height: 14px;
   border-radius: 4px;
-  background: #2b1b2b;
+  background: rgba(212, 175, 55, 0.06);
   display: inline-block;
   position: relative;
+  border: 1px solid rgba(212, 175, 55, 0.08);
 }
 .remember input:checked + .checkbox-custom {
-  background: #6b4a86;
+  background: #ffd700;
 }
 
 .forgot {
-  color: #6a4c77;
+  color: #d4af37;
+  text-shadow: 2px 2px 8px #000, 0 0 16px #222;
   text-decoration: none;
 }
 
 .btn-login {
   margin-top: 6px;
-  background: #6b466e;
-  color: #fff;
+  background: #d4af37; /* botão dourado */
+
+  color: #181818; /* texto escuro */
   border: none;
   padding: 10px 14px;
   border-radius: 6px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
 .create {
   margin-top: 12px;
   text-align: center;
-  color: #8a6d88;
+  color: #f3e7b3;
   font-size: 13px;
 }
 

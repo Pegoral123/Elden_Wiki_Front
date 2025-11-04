@@ -11,10 +11,11 @@
 <script setup></script>
 
 <style scoped>
+/* footer styling (cor dourada consistente) */
 .site-footer {
   background: #181818;
-  border-top: 3px solid rgba(255, 215, 0, 0.15);
-  color: #ffd700;
+  border-top: 3px solid rgba(212, 175, 55, 0.15);
+  color: #d4af37;
   padding: 1rem 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial;
@@ -29,13 +30,7 @@
   justify-content: center;
 }
 
-.site-footer p {
-  margin: 0;
-  color: #636157;
-  font-weight: 600;
-  text-align: center;
-}
-
+/* (duplicated rules removed) */
 @media (max-width: 420px) {
   .site-footer p {
     font-size: 14px;
