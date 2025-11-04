@@ -6,10 +6,12 @@
   >
     <LocationsSection />
   </div>
+  <Footer />
 </template>
 
 <script setup>
 import Navbar from "@/components/navBar.vue";
+import Footer from "@/components/footerPage.vue";
 import LocationsSection from "@/components/locationsSection.vue";
 </script>
 
