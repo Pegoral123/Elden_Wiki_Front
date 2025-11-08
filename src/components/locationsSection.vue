@@ -308,7 +308,7 @@ onMounted(() => {
 
 .retry-btn {
   margin-top: 1rem;
-  background: #ffd700;
+  background: #efb810;
   color: #222;
   border: none;
   padding: 0.6rem 1rem;

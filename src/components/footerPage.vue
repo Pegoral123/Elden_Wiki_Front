@@ -15,7 +15,7 @@
 .site-footer {
   background: #181818;
   border-top: 3px solid rgba(212, 175, 55, 0.15);
-  color: #d4af37;
+  color: #efb810;
   padding: 1rem 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial;

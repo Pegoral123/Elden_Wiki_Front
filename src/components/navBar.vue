@@ -79,7 +79,7 @@ const logo = logoImg;
 }
 
 .navbar-links .link-cadastro {
-  color: #d4af37; /* título dourado */
+  color: #efb810; /* título dourado */
   text-shadow: 2px 2px 8px #000, 0 0 16px #222;
   font-weight: bold;
   font-size: 1.3rem;
