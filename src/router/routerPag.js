@@ -11,6 +11,10 @@ const routes = [
     path: "/LoginPage",
     component: () => import("@/components/LoginPage.vue"),
   },
+  {
+    path: "/RegisterPage",
+    component: () => import("@/components/RegisterPage.vue"),
+  },
 ];
 
 export default routes;
