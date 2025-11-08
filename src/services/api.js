@@ -63,3 +63,18 @@ export async function loginUser(email, password) {
     throw erro;
   }
 }
+
+// função para registrar usuário (chama a rota /auth/register do backend)
+export async function registerUser(name, email, password) {
+  try {
+    const resposta = await api.post("/auth/register", {
+      name,
+      email,
+      password,
+    });
+    return resposta.data;
+  } catch (erro) {
+    if (erro.response && erro.response.data) throw erro.response.data;
+    throw erro;
+  }
+}
