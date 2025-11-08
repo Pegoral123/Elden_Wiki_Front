@@ -81,10 +81,14 @@
 
           <button class="btn-login" type="submit" :disabled="loading">
             <span v-if="!loading">Ascender ao Trono (Login)</span>
-            <span v-else>Forjando o Anel...</span>
-          </button>
+            <span v-else>Forjando o Anel...</span></button
+          >]
 
-          <div class="create">Forjar Nova Alma (Criar Conta)</div>
+          <div>
+            <a class="create" href="/RegisterPage">
+              Forjar Nova Alma (Criar Conta)
+            </a>
+          </div>
         </form>
       </div>
     </div>
