@@ -1,4 +1,5 @@
 <template>
+  <!-- Página principal que combina Navbar, seção de locais e Footer -->
   <Navbar />
   <div
     class="hero"
@@ -10,9 +11,15 @@
 </template>
 
 <script setup>
+// Componentes compostos usados nesta página
 import Navbar from "@/components/navBar.vue";
 import Footer from "@/components/footerPage.vue";
 import LocationsSection from "@/components/locationsSection.vue";
+
+/*
+  mainPage.vue é um wrapper simples que monta a página principal do app.
+  Mantemos a maioria das responsabilidades de exibição em `LocationsSection`.
+*/
 </script>
 
 <style scoped>

@@ -1,4 +1,11 @@
 <template>
+  <!--
+    Componente de exibição de locais e bosses (seções de jogo).
+    Estados possíveis (status): 'loading', 'error', 'success'.
+    - loading: mostra spinner
+    - error: mostra modal com botão de retry
+    - success: renderiza dados de locais e listas de bosses
+  -->
   <section class="locais-container">
     <div v-if="status === 'loading'" class="loading-state">
       <div class="spinner" aria-hidden="true"></div>
@@ -100,6 +107,12 @@
 </template>
 
 <script setup>
+/*
+  locationsSection.vue - script setup
+  - importa rotas/serviços para obter dados de locais e bosses
+  - gerencia estado reativo (refs): dados, status e mensagens de erro
+  - exporta a função fetchData usada para retry
+*/
 import {
   RotaLimgrave,
   RotaCaelid,
@@ -108,13 +121,20 @@ import {
 } from "../services/api.js";
 import { ref, onMounted } from "vue";
 
+// dados reativos expostos ao template
 const limgrave_local = ref({});
 const caelid_local = ref({});
 const bosses_limgrave = ref([]);
 const bosses_caelid = ref([]);
+// status: 'loading' | 'error' | 'success'
 const status = ref("loading");
 const errorMessage = ref("");
 
+/**
+ * Busca dados do backend para as seções de locais e bosses.
+ * Usa Promise.all para paralelizar as requisições e reduzir tempo de carregamento.
+ * Atualiza `status` para controlar a UI.
+ */
 async function fetchData() {
   status.value = "loading";
   errorMessage.value = "";
@@ -127,6 +147,7 @@ async function fetchData() {
       caelid_bosses(),
     ]);
 
+    // normaliza respostas nulas
     limgrave_local.value = lim || {};
     caelid_local.value = cae || {};
     bosses_limgrave.value = bLim || [];
@@ -140,6 +161,7 @@ async function fetchData() {
   }
 }
 
+// carregar dados ao montar o componente
 onMounted(() => {
   fetchData();
 });

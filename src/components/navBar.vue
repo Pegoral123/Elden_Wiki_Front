@@ -9,7 +9,7 @@
       <li><a href="/LoginPage" class="link-cadastro">Conectar-se</a></li>
       <li>
         <a
-          href="https://discord.gg/Qy5t2k6M"
+          href="https://discord.gg/q2zkd7k4my"
           target="_blank"
           rel="noopener"
           class="discord-link"

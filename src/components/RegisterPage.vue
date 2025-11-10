@@ -1,4 +1,5 @@
 <template>
+  <!-- Navbar global do site -->
   <Navbar />
   <div
     class="hero"
@@ -7,7 +8,10 @@
     <div class="card">
       <div class="card-body">
         <h2 class="title">Forjar Nova Alma</h2>
-
+        <!-- Formulário de registro de usuário
+             - on submit chama método `register`
+             - mostra mensagens de erro/sucesso acima dos campos
+        -->
         <form @submit.prevent="register" class="form">
           <div v-if="errorMessage" class="form-error">{{ errorMessage }}</div>
           <div v-if="successMessage" class="form-success">
@@ -127,25 +131,42 @@ export default {
   components: { Navbar, Footer },
   data() {
     return {
+      // campos do formulário
       name: "",
       email: "",
       password: "",
       confirmPassword: "",
+      // estado de submissão
       loading: false,
-      errorMMessage: "",
-      successessage: "",
+      // mensagens exibidas na UI
+      errorMessage: "",
+      successMessage: "",
     };
   },
   methods: {
+    /**
+     * register
+     * Handler do submit do formulário de registro.
+     * - Valida campos localmente (nome, email, senha e confirmação)
+     * - Chama `registerUser` do serviço `api.js`
+     * - Em caso de sucesso, armazena token(s) e redireciona para `/mainPage`
+     * - Em caso de erro, normaliza a resposta e exibe mensagem amigável
+     *
+     * Entradas via data(): name, email, password, confirmPassword
+     * Efeitos colaterais: altera `loading`, `errorMessage`, `successMessage`, sessionStorage e rota
+     */
     async register() {
+      // reset das mensagens de UI
       this.errorMessage = "";
       this.successMessage = "";
 
+      // normalização/trim de entradas
       const name = (this.name || "").trim();
       const email = (this.email || "").trim();
       const password = this.password || "";
       const confirm = this.confirmPassword || "";
 
+      // validações básicas no cliente (evitar chamadas desnecessárias ao backend)
       if (!name) {
         this.errorMessage = "Informe seu nome, Maculado.";
         return;
@@ -168,22 +189,29 @@ export default {
         return;
       }
 
+      // indica que a submissão está em progresso
       this.loading = true;
       try {
         const res = await registerUser(name, email, password);
         // Se o backend devolver tokens, podemos autenticar imediatamente
-        if (res.idToken) {
+        if (res && res.idToken) {
+          // guarda token no serviço e no sessionStorage para persistência temporária
           setAuthToken(res.idToken);
-          // armazenar em sessionStorage por padrão
           sessionStorage.setItem("idToken", res.idToken);
           if (res.refreshToken)
             sessionStorage.setItem("refreshToken", res.refreshToken);
+          // redireciona para a página principal após registro
           this.$router.push({ path: "/mainPage" });
           return;
         }
+
+        // se o backend não retornar token, exibir mensagem genérica de sucesso
+        this.successMessage = "Conta criada com sucesso.";
       } catch (err) {
+        // normalização de erros esperados do axios / backend
         console.error("Erro no registro:", err);
-        const resp = err?.response?.data || err;
+        const resp =
+          err && err.response && err.response.data ? err.response.data : err;
         if (resp) {
           if (Array.isArray(resp.detail)) {
             this.errorMessage = resp.detail

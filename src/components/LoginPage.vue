@@ -1,4 +1,5 @@
 <template>
+  <!-- Navbar global do site -->
   <Navbar />
   <div
     class="hero"
@@ -81,13 +82,14 @@
 
           <button class="btn-login" type="submit" :disabled="loading">
             <span v-if="!loading">Ascender ao Trono (Login)</span>
-            <span v-else>Forjando o Anel...</span></button
-          >]
+            <span v-else>Forjando o Anel...</span>
+          </button>
 
           <div>
-            <a class="create" href="/RegisterPage">
+            <!-- Usar router-link para navegação SPA em vez de href -->
+            <router-link class="create" to="/register">
               Forjar Nova Alma (Criar Conta)
-            </a>
+            </router-link>
           </div>
         </form>
       </div>
@@ -117,25 +119,35 @@ export default {
     };
   },
   methods: {
+    /**
+     * Efetua login do usuário.
+     * - Valida que os campos foram preenchidos no formulário (precondição: UI faz binding)
+     * - Chama `loginUser(email, password)` do serviço `api.js`
+     * - Se retornar tokens, persiste (localStorage) e configura header via `setAuthToken`
+     * - Redireciona para `/mainPage` em caso de sucesso
+     * - Em caso de erro, normaliza a mensagem para exibir em `errorMessage`
+     */
     async login() {
       this.errorMessage = "";
       this.loading = true;
       try {
         const res = await loginUser(this.email, this.password);
         // exemplo de dados retornados: { idToken, refreshToken, expiresIn, localId }
-        if (res.idToken) {
+        if (res && res.idToken) {
+          // salvar token dependendo do comportamento desejado (aqui localStorage)
           localStorage.setItem("idToken", res.idToken);
+          // configurar header Authorization apenas se houver token
+          setAuthToken(res.idToken);
         }
-        if (res.refreshToken) {
+        if (res && res.refreshToken) {
           localStorage.setItem("refreshToken", res.refreshToken);
         }
-        // configura header Authorization para futuras chamadas
-        setAuthToken(res.idToken);
 
         // redireciona para mainPage (ou rota desejada)
         this.$router.push({ path: "/mainPage" });
       } catch (err) {
-        alert("Login falhou:", err);
+        // Preferir console.error para não bloquear a UI com alert nativo
+        console.error("Login falhou:", err);
         // err pode ser um objeto vindo do backend
         this.errorMessage =
           (err && err.error && err.error.message) || err.message || String(err);
