@@ -4,7 +4,6 @@ const api = axios.create({
   baseURL: "http://127.0.0.1:8000",
 });
 
-// permite configurar token de autorização padrão para chamadas subsequentes
 export function setAuthToken(token) {
   if (token) {
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -52,19 +51,17 @@ export async function RotaCaelid() {
     throw erro;
   }
 }
-// função para login (chama a rota /login do backend)
+
 export async function loginUser(email, password) {
   try {
     const resposta = await api.post("/auth/login", { email, password });
     return resposta.data;
   } catch (erro) {
-    // normaliza o erro para o frontend
     if (erro.response && erro.response.data) throw erro.response.data;
     throw erro;
   }
 }
 
-// função para registrar usuário (chama a rota /auth/register do backend)
 export async function registerUser(name, email, password) {
   try {
     const resposta = await api.post("/auth/register", {
