@@ -102,14 +102,6 @@
             />
           </label>
 
-          <div class="options">
-            <label class="remember">
-              <input type="checkbox" v-model="agree" />
-              <span class="checkbox-custom"></span>
-              Aceito os termos do Pacto
-            </label>
-          </div>
-
           <button class="btn-login" type="submit" :disabled="loading">
             <span v-if="!loading">Forjar Alma (Registrar)</span>
             <span v-else>Forjando...</span>
@@ -139,10 +131,9 @@ export default {
       email: "",
       password: "",
       confirmPassword: "",
-      agree: false,
       loading: false,
-      errorMessage: "",
-      successMessage: "",
+      errorMMessage: "",
+      successessage: "",
     };
   },
   methods: {
@@ -176,10 +167,6 @@ export default {
         this.errorMessage = "As senhas não conferem.";
         return;
       }
-      if (!this.agree) {
-        this.errorMessage = "Você precisa aceitar os termos do Pacto.";
-        return;
-      }
 
       this.loading = true;
       try {
@@ -194,10 +181,6 @@ export default {
           this.$router.push({ path: "/mainPage" });
           return;
         }
-        // caso o backend retorne apenas confirmação
-        this.successMessage =
-          "Conta criada com sucesso! Redirecionando para login...";
-        setTimeout(() => this.$router.push({ path: "/login" }), 1500);
       } catch (err) {
         console.error("Erro no registro:", err);
         const resp = err?.response?.data || err;
@@ -323,26 +306,7 @@ export default {
   color: #7b6a56;
   margin-bottom: 12px;
 }
-.remember {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.checkbox-custom {
-  width: 14px;
-  height: 14px;
-  border-radius: 4px;
-  background: rgba(212, 175, 55, 0.06);
-  display: inline-block;
-  position: relative;
-  border: 1px solid rgba(212, 175, 55, 0.08);
-}
-.remember input {
-  display: none;
-}
-.remember input:checked + .checkbox-custom {
-  background: #efb810;
-}
+
 .btn-login {
   background: linear-gradient(180deg, #e0c07a 0%, #c9a85a 100%);
   color: #14120f;
